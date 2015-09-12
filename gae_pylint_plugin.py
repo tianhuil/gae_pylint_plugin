@@ -1,37 +1,18 @@
 from astroid import MANAGER
 from astroid import scoped_nodes
-
-# list from https://cloud.google.com/appengine/docs/python/ndb/properties
-NDB_PROPERTIES = [
-    'IntegerProperty',
-    'FloatProperty',
-    'BooleanProperty',
-    'StringProperty',
-    'TextProperty',
-    'BlobProperty',
-    'DateTimeProperty',
-    'DateProperty',
-    'TimeProperty',
-    'GeoPtProperty',
-    'KeyProperty',
-    'BlobKeyProperty',
-    'UserProperty',
-    'StructuredProperty',
-    'LocalStructuredProperty',
-    'JsonProperty',
-    'PickleProperty',
-    'GenericProperty',
-    'ComputedProperty',
-]
-
+from google.appengine.api import memcache
+from google.appengine.ext import ndb
 
 def register(linter):
     pass
 
-
 def transform(modu):
     if modu.name == 'google.appengine.ext.ndb':
-        for f in NDB_PROPERTIES:
+        for f in [f for f in ndb.__dict__.keys() if 'Property' in f]:
+            modu.locals[f] = [scoped_nodes.Class(f, None)]
+
+    if modu.name == 'google.appengine.api.memcache':
+        for f in memcache.__dict__.keys():
             modu.locals[f] = [scoped_nodes.Class(f, None)]
 
 MANAGER.register_transform(scoped_nodes.Module, transform)
