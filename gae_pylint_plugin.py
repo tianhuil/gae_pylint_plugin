@@ -1,11 +1,27 @@
 from astroid import MANAGER
 from astroid import scoped_nodes
 
+# list from https://cloud.google.com/appengine/docs/python/ndb/properties
 NDB_PROPERTIES = [
-    'DateTimeProperty',
+    'IntegerProperty',
+    'FloatProperty',
+    'BooleanProperty',
     'StringProperty',
+    'TextProperty',
+    'BlobProperty',
+    'DateTimeProperty',
+    'DateProperty',
+    'TimeProperty',
+    'GeoPtProperty',
     'KeyProperty',
-    'StructuredProperty'
+    'BlobKeyProperty',
+    'UserProperty',
+    'StructuredProperty',
+    'LocalStructuredProperty',
+    'JsonProperty',
+    'PickleProperty',
+    'GenericProperty',
+    'ComputedProperty',
 ]
 
 
